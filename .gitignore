@@ -174,3 +174,7 @@ poetry.toml
 pyrightconfig.json
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+
+# Large model artifacts (too big for GitHub)
+ensemble_model.pkl
+model.pkl
