@@ -171,6 +171,8 @@ if 'data_loaded' not in st.session_state:
     st.session_state.data_loaded = False
 if 'dataset_label' not in st.session_state:
     st.session_state.dataset_label = None
+if 'model_performance' not in st.session_state:
+    st.session_state.model_performance = None
 
 # Header
 st.markdown('<h1 class="main-header">🏠 Real Estate Price Prediction System</h1>', unsafe_allow_html=True)
@@ -470,6 +472,7 @@ elif page == "🤖 Model Training":
                 progress_bar.progress(100)
                 
                 pipeline.save_models()
+                st.session_state.model_performance = pipeline.performance
                 
                 status_text.text("✅ Training completed!")
                 st.success("🎉 All models trained successfully!")
@@ -577,6 +580,15 @@ elif page == "🔮 Predictions":
         else:
 
             st.subheader("Enter Property Details")
+
+            # Model accuracy summary
+            if st.session_state.model_performance:
+                st.markdown("#### 📊 Model Accuracy")
+                perf = st.session_state.model_performance
+                cols = st.columns(len(perf))
+                for col, (name, metrics) in zip(cols, perf.items()):
+                    col.metric(name, f"R² {metrics['R2']:.2%}", f"RMSE {metrics['RMSE']:.2f}")
+                st.markdown("---")
 
             is_bengaluru = any(str(c).startswith("location_") for c in feature_cols)
             price_col_for_unit = None
