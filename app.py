@@ -575,7 +575,7 @@ elif page == "🔮 Predictions":
         if model is None or scaler is None or feature_cols is None:
             st.error("Model artifacts not found. Please train the models from the Model Training page.")
         else:
-            st.caption(f"Using model: {model_path}, scaler: {scaler_path}, columns: {cols_path}")
+
             st.subheader("Enter Property Details")
 
             is_bengaluru = any(str(c).startswith("location_") for c in feature_cols)
